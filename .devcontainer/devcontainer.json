@@ -1,0 +1,21 @@
+{
+  "name": "Cardano CLI Devcontainer",
+  "image": "ghcr.io/blinklabs-io/cardano-node:main",
+  "features": {
+    "docker-in-docker": "latest"
+  },
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspaces,type=bind"
+  ],
+  "postCreateCommand": "cardano-node run --config /opt/cardano/config/preview/config.json --database-path /opt/cardano/config/preview/db/ --socket-path /opt/cardano/config/preview/db/node.socket --host-addr 127.0.0.1 --port 3001 --topology /opt/cardano/config/preview/topology.json",
+  "runArgs": [
+    "--env", "NETWORK=preview",
+    "--publish", "3001:3001",
+    "--cap-add=SYS_NICE",
+    "--network=host"
+  ],
+  "remoteEnv": {
+    "CARDANO_NODE_SOCKET_PATH": "/opt/cardano/config/preview/db/node.socket"
+  },
+  "shutdownAction": "none"
+}
